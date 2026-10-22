@@ -48,7 +48,7 @@
           "title": "Exporting region",
           "scale": {
             "domain": ["Southeast Asia", "East Asia", "Europe", "Other regions"],
-            "range": ["#FF5A1F", "#2D4BFF", "#F2B600", "#A9A6C4"]
+            "range": ["#2E9E4F", "#8B5A2B", "#F2B600", "#A9A6C4"]
           },
           "legend": {
             "orient": "bottom",

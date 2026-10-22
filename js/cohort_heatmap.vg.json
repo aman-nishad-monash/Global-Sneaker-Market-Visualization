@@ -36,7 +36,7 @@
       "encoding": {
         "color": {
           "field": "median_premium", "type": "quantitative",
-          "scale": {"domain": [-0.5, 1.5], "domainMid": 0, "clamp": true, "range": ["#2D4BFF", "#FFF6E5", "#D13A00"], "interpolate": "lab"},
+          "scale": {"domain": [-0.5, 1.5], "domainMid": 0, "clamp": true, "range": ["#5B2A86", "#FFF6E5", "#D13A00"], "interpolate": "lab"},
           "legend": {
             "title": "Typical resale price vs retail", "orient": "bottom", "direction": "horizontal",
             "gradientLength": 300, "values": [-0.5, 0, 0.5, 1, 1.5],

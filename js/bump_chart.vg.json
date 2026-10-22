@@ -49,7 +49,7 @@
       "type": "nominal",
       "scale": {
         "domain": ["Nike", "adidas", "ANTA", "Other companies"],
-        "range": ["#FF5A1F", "#15131F", "#E6007E", "#B9B6D0"]
+        "range": ["#FF5A1F", "#15131F", "#E8202A", "#B9B6D0"]
       },
       "legend": null
     },
@@ -140,7 +140,7 @@
       "data": {"values": [{"chart_year": 2022, "rank": 3, "t": "ANTA passes Skechers, then PUMA"}]},
       "transform": [],
       "mark": {"type": "text", "dy": 20, "dx": -40, "fontSize": 11.5, "fontWeight": 700, "fontStyle": "italic"},
-      "encoding": {"text": {"field": "t"}, "color": {"value": "#E6007E"}, "opacity": {"value": 1}, "tooltip": null}
+      "encoding": {"text": {"field": "t"}, "color": {"value": "#E8202A"}, "opacity": {"value": 1}, "tooltip": null}
     }
   ],
   "config": {

@@ -57,7 +57,7 @@
               "params": [
                 {"name": "flow_highlight", "select": {"type": "point", "fields": ["flow"]}, "bind": "legend"}
               ],
-              "mark": {"type": "circle", "stroke": "white", "strokeWidth": 1.2, "clip": true},
+              "mark": {"type": "circle", "strokeWidth": 1.2, "clip": true},
               "encoding": {
                 "size": {
                   "field": "value",
@@ -76,7 +76,7 @@
                   "title": "Click to highlight",
                   "legend": {"orient": "none", "legendX": 6, "legendY": 95, "symbolType": "circle", "titleLimit": 220}
                 },
-                "opacity": {"condition": {"param": "flow_highlight", "value": 0.85}, "value": 0.12},
+                "opacity": {"condition": {"param": "flow_highlight", "value": 0.66}, "value": 0.12},
                 "order": {"field": "value", "sort": "descending"}
               }
             },

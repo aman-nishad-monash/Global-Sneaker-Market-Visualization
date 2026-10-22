@@ -1,409 +1,351 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>The Global Sneaker Market</title>
-  <meta name="author" content="Aman">
-  <meta name="description" content="Where athletic shoes are made, which brands sell them, and what collectors pay for them: trade, company revenue and StockX resale prices.">
 
-  <!-- Fonts: Big Shoulders Display (display), DM Sans (body), Space Mono (data) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-
-  <!-- Vega, Vega-Lite and Vega-Embed (exact versions pinned) -->
+  <!-- Vega, Vega-Lite and Vega-Embed -->
   <script src="https://cdn.jsdelivr.net/npm/vega@5.30.0"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.21.0"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.26.0"></script>
 
+  <!-- pure.css grid (as in the Week 9 studio) -->
+  <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css">
+
   <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
 
-  <header class="wrap page-header">
-    <div class="card">
-      <div class="hero">
-        <div>
-          <span class="tag">FIT3179 Data Visualisation 2 · Style no. 2026-A2</span>
-          <h1>The Global <span>Sneaker</span> Market</h1>
-          <p class="lede">Where athletic shoes are made, which brands sell them, and what collectors pay for them once they are sold out.</p>
-          <p class="byline">By Aman · October 2026 · Data: CEPII BACI, company annual reports, StockX via embSneakers</p>
-        </div>
-        <div class="hero-stats">
-          <div class="hero-stat"><b>23 years</b><span>of world footwear trade, 2002 to 2024</span></div>
-          <div class="hero-stat"><b>8 brands</b><span>followed through their annual reports</span></div>
-          <div class="hero-stat"><b>13.3M</b><span>StockX resale price records, 2012 to 2020</span></div>
-        </div>
+<body>
+  <div class="page">
+
+    <!-- ============ HEADER ============ -->
+    <div class="pure-g">
+      <div class="pure-u-1-1">
+        <h1>The Global Sneaker Market</h1>
+        <p>Where athletic shoes are made, which brands sell them, and what collectors pay for them once they are sold out.</p>
+        <p class="small-font">By Aman · October 2026 · Data: CEPII BACI, company annual reports, StockX via embSneakers</p>
+        <ul>
+          <li>23 years of world footwear trade, 2002 to 2024</li>
+          <li>8 brands followed through their annual reports</li>
+          <li>13.3M StockX resale price records, 2012 to 2020</li>
+        </ul>
       </div>
     </div>
-  </header>
 
-  <main class="wrap">
-
-    <!-- ===================== ACT 1: TRADE ===================== -->
-    <section class="act act-1" id="act1">
-
-      <div class="grid">
-        <div class="card text-card span-6">
-          <span class="tag">Act 1 · Trade · 2002 to 2024</span>
+    <!-- ============ ACT 1: TRADE ============ -->
+    <div class="pure-g">
+      <div class="pure-u-1-2">
+        <div class="description description-left">
           <h2>Made in Asia, bought everywhere</h2>
           <p>Most sneakers are made in a handful of Asian countries and bought in a few large markets.</p>
           <p>These maps follow world trade in athletic-style footwear from 2002 to 2024. They show production moving from China to Southeast Asia, especially Vietnam.</p>
         </div>
-        <div class="stat-stack span-6">
-          <div class="card stat">
-            <span class="stat-value">74%</span>
-            <span class="stat-label">of world exports came from just five countries</span>
-            <span class="stat-caption">2024 · Share of export value</span>
-          </div>
-          <div class="card stat">
-            <span class="stat-value">46.8→31.6%</span>
-            <span class="stat-label">China's share of world exports fell by a third</span>
-            <span class="stat-caption">2002 to 2024</span>
-          </div>
-          <div class="card stat">
-            <span class="stat-value">6.6→23.6%</span>
-            <span class="stat-label">Vietnam's share more than tripled</span>
-            <span class="stat-caption">2002 to 2024</span>
-          </div>
+      </div>
+      <div class="pure-u-1-2">
+        <div class="description description-right">
+          <h3>74%</h3>
+          <p>of world exports came from just five countries (2024)</p>
+          <h3>46.8→31.6%</h3>
+          <p>China's share of world exports fell by a third (2002 to 2024)</p>
+          <h3>6.6→23.6%</h3>
+          <p>Vietnam's share more than tripled (2002 to 2024)</p>
         </div>
       </div>
+    </div>
 
-      <div class="grid">
-        <figure class="card chart-card span-12">
-          <span class="tag">Fig 1.1 · Proportional symbol map</span>
-          <h3 class="chart-title">Five countries ship 74% of the world's athletic shoes</h3>
-          <p class="chart-sub">Top five exporters and importers of athletic-style footwear, by trade value (US$).</p>
-          <div class="plot"><div id="symbol_map" class="chart"></div></div>
-          <p class="key"><b>How to read:</b> circle area = trade value; blue = exporter, pink = importer.
-            Drag the year slider; click a legend item to highlight one group.</p>
-        </figure>
+    <div class="pure-g">
+      <div class="pure-u-1-1">
+        <h3>Five countries ship 74% of the world's athletic shoes</h3>
+        <p>Top five exporters and importers of athletic-style footwear, by trade value (US$).</p>
+        <div id="symbol_map" class="vis-container"></div>
       </div>
+    </div>
 
-      <div class="grid">
-        <div class="card insight-card span-4">
-          <span class="badge">68.8→74.4%</span>
-          <h4>The top five keep getting bigger</h4>
+    <div class="pure-g">
+      <div class="pure-u-1-3">
+        <div class="description description-left">
+          <h4>68.8→74.4%: The top five keep getting bigger</h4>
           <p>Five countries sold 68.8% of the world's athletic shoes in 2002. By 2024 it was 74.4%.</p>
           <p>World exports tripled, from US$44 billion to US$132 billion. The biggest exporters grew faster than everyone else.</p>
         </div>
-        <div class="card insight-card span-4">
-          <span class="badge">×10.7</span>
-          <h4>Vietnam grew nearly eleven times over</h4>
+      </div>
+      <div class="pure-u-1-3">
+        <div class="description description-left">
+          <h4>×10.7: Vietnam grew nearly eleven times over</h4>
           <p>Vietnam's exports rose from US$2.9 billion to US$31.2 billion.</p>
           <p>China's doubled, from US$20.7 billion to US$41.7 billion. But the world tripled, so China's share still fell.</p>
         </div>
-        <div class="card insight-card span-4">
-          <span class="badge">18.6%</span>
-          <h4>One country buys nearly a fifth</h4>
+      </div>
+      <div class="pure-u-1-3">
+        <div class="description description-right">
+          <h4>18.6%: One country buys nearly a fifth</h4>
           <p>The United States bought US$24.5 billion of shoes in 2024. That is 18.6% of all imports.</p>
           <p>It is more than Germany and France combined (US$19.4 billion).</p>
         </div>
       </div>
+    </div>
 
-      <div class="grid">
-        <figure class="card chart-card span-12">
-          <span class="tag">Fig 1.2 · Flow map</span>
-          <h3 class="chart-title">The biggest flows start in Asia and end in Europe or North America</h3>
-          <p class="chart-sub">The 15 largest footwear trade flows between world regions (US$).</p>
-          <div class="plot"><div id="flow_map" class="chart"></div></div>
-          <p class="key"><b>How to read:</b> arrow width = value; colour = exporting region.
-            Hover for details; click a region to show only its flows (double-click to reset).</p>
-          <p class="footnote">Arrows from Asia to the Americas cross the Pacific, so they leave the map on the right and return on the left.</p>
-        </figure>
+    <div class="pure-g">
+      <div class="pure-u-1-1">
+        <h3>The biggest flows start in Asia and end in Europe or North America</h3>
+        <p>The 15 largest footwear trade flows between world regions (US$).</p>
+        <div id="flow_map" class="vis-container"></div>
+        <p class="small-font">Arrows from Asia to the Americas cross the Pacific, so they leave the map on the right and return on the left.</p>
       </div>
+    </div>
 
-      <div class="grid">
-        <div class="card insight-card span-4">
-          <span class="badge">2023</span>
-          <h4>Southeast Asia overtook East Asia</h4>
+    <div class="pure-g">
+      <div class="pure-u-1-3">
+        <div class="description description-left">
+          <h4>2023: Southeast Asia overtook East Asia</h4>
           <p>In 2023 Southeast Asia exported US$43.3 billion against East Asia's US$42.4 billion. A year later the lead was US$4.6 billion.</p>
           <p>In 2002 East Asia held 50% of the world's exports and Southeast Asia only 14%.</p>
         </div>
-        <div class="card insight-card span-4">
-          <span class="badge">20 of 147</span>
-          <h4>Few countries sell more than they buy</h4>
+      </div>
+      <div class="pure-u-1-3">
+        <div class="description description-left">
+          <h4>20 of 147: Few countries sell more than they buy</h4>
           <p>Only 20 of 147 countries with data are net exporters.</p>
           <p>China and Vietnam together sell US$66.9 billion more than they buy. That is 73% of all 20 countries' surplus.</p>
         </div>
-        <div class="card insight-card span-4">
-          <span class="badge">42%</span>
-          <h4>Europe mostly buys from Europe</h4>
+      </div>
+      <div class="pure-u-1-3">
+        <div class="description description-right">
+          <h4>42%: Europe mostly buys from Europe</h4>
           <p>Of the US$62.3 billion of shoes Europe imported in 2024, US$26.0 billion (42%) came from other European countries.</p>
-          <p class="small">The flow map leaves this out. It shows only trade between regions.</p>
+          <p class="small-font">The flow map leaves this out. It shows only trade between regions.</p>
         </div>
       </div>
+    </div>
 
-      <div class="grid">
-        <figure class="card chart-card span-12">
-          <span class="tag">Fig 1.3 · Choropleth map</span>
-          <h3 class="chart-title">Only a few countries, mostly in Asia, sell more than they buy</h3>
-          <p class="chart-sub">Exports minus imports, as a share of each country's footwear trade.</p>
-          <div class="plot"><div id="choropleth_map" class="chart"></div></div>
-          <p class="key"><b>How to read:</b> blue = sells more than it buys; pink = buys more than it sells; grey = under US$10 million or no data.
-            The three biggest on each side are named.</p>
-        </figure>
+    <div class="pure-g">
+      <div class="pure-u-1-1">
+        <h3>Only a few countries, mostly in Asia, sell more than they buy</h3>
+        <p>Exports minus imports, as a share of each country's footwear trade.</p>
+        <div id="choropleth_map" class="vis-container"></div>
       </div>
-    </section>
+    </div>
 
-    <!-- ===================== ACT 2: BRANDS ===================== -->
-    <section class="act act-2" id="act2">
-
-      <div class="grid">
-        <div class="card text-card span-6">
-          <span class="tag">Act 2 · Brands · 2019 to 2026</span>
+    <!-- ============ ACT 2: BRANDS ============ -->
+    <div class="pure-g">
+      <div class="pure-u-1-2">
+        <div class="description description-left">
           <h2>A few brands sell the shoes</h2>
           <p>The shoes made in Asia are sold under a small number of brands.</p>
           <p>These charts follow eight of the largest sportswear and footwear companies through their own annual reports, converted to US dollars.</p>
         </div>
-        <div class="stat-stack span-6">
-          <div class="card stat">
-            <span class="stat-value">US$46.4bn</span>
-            <span class="stat-label">Nike, Inc. revenue, the largest of the eight</span>
-            <span class="stat-caption">Fiscal 2026 · June 2025 to May 2026</span>
-          </div>
-          <div class="card stat">
-            <span class="stat-value">#1</span>
-            <span class="stat-label">Nike's rank in every year shown</span>
-            <span class="stat-caption">2019 to 2024</span>
-          </div>
-          <div class="card stat">
-            <span class="stat-value">5th→3rd</span>
-            <span class="stat-label">China's ANTA, the fastest climber</span>
-            <span class="stat-caption">2019 to 2024</span>
-          </div>
+      </div>
+      <div class="pure-u-1-2">
+        <div class="description description-right">
+          <h3>US$46.4bn</h3>
+          <p>Nike, Inc. revenue, the largest of the eight (fiscal 2026, June 2025 to May 2026)</p>
+          <h3>#1</h3>
+          <p>Nike's rank in every year shown (2019 to 2024)</p>
+          <h3>5th→3rd</h3>
+          <p>China's ANTA, the fastest climber (2019 to 2024)</p>
         </div>
       </div>
+    </div>
 
-      <div class="grid">
-        <figure class="card chart-card span-6">
-          <span class="tag">Fig 2.1 · Bump chart</span>
-          <h3 class="chart-title">Nike and adidas have held the top two places for six years</h3>
-          <p class="chart-sub">Revenue rank of eight sportswear companies, 2019 to 2024 (1 = highest revenue in US$).</p>
-          <div class="plot"><div id="bump_chart" class="chart"></div></div>
-          <p class="key"><b>How to read:</b> each line is one company; the number in the dot is its rank.
-            Click a company to highlight it (double-click to reset).</p>
-          <p class="footnote">Nike's year ends in May and Deckers' in March; each is plotted in the year its financial year starts,
-            so Nike's 2024 point (US$46.3bn) is fiscal 2025. * = a change in what is counted.</p>
-        </figure>
-
-        <figure class="card chart-card span-6">
-          <span class="tag">Fig 2.2 · Treemap</span>
-          <h3 class="chart-title">Nike's three brands earn more than adidas and PUMA combined</h3>
-          <p class="chart-sub">Revenue by brand in each company's latest financial year (US$).</p>
-          <div class="plot"><div id="treemap" class="chart"></div></div>
-          <p class="key"><b>How to read:</b> rectangle area = revenue; white borders group brands by owner.
-            Hover to highlight a company.</p>
-          <p class="footnote">Latest years: Nike and Deckers 2026; adidas, PUMA, ASICS, ANTA and Crocs 2025; Skechers 2024 (no 2025 report).</p>
-        </figure>
+    <div class="pure-g">
+      <div class="pure-u-1-2">
+        <div class="description description-left">
+          <h3>Nike and adidas have held the top two places for six years</h3>
+          <p>Revenue rank of eight sportswear companies, 2019 to 2024 (1 = highest revenue in US$).</p>
+          <div id="bump_chart" class="vis-container"></div>
+          <p class="small-font">Nike's year ends in May and Deckers' in March; each is plotted in the year its financial year starts, so Nike's 2024 point (US$46.3bn) is fiscal 2025. * = a change in what is counted.</p>
+        </div>
       </div>
+      <div class="pure-u-1-2">
+        <div class="description description-right">
+          <h3>Nike's three brands earn more than adidas and PUMA combined</h3>
+          <p>Revenue by brand in each company's latest financial year (US$).</p>
+          <div id="treemap" class="vis-container"></div>
+          <p class="small-font">Latest years: Nike and Deckers 2026; adidas, PUMA, ASICS, ANTA and Crocs 2025; Skechers 2024 (no 2025 report).</p>
+        </div>
+      </div>
+    </div>
 
-      <div class="grid">
-        <div class="card insight-card span-4">
-          <span class="badge">63%</span>
-          <h4>Two companies take most of the money</h4>
+    <div class="pure-g">
+      <div class="pure-u-1-3">
+        <div class="description description-left">
+          <h4>63%: Two companies take most of the money</h4>
           <p>Nike and adidas earned US$71.9 billion in 2024. That is 63% of the eight companies' US$113.4 billion.</p>
           <p>The other six share the remaining 37%.</p>
         </div>
-        <div class="card insight-card span-4">
-          <span class="badge">×2.0</span>
-          <h4>ANTA doubled its sales</h4>
+      </div>
+      <div class="pure-u-1-3">
+        <div class="description description-left">
+          <h4>×2.0: ANTA doubled its sales</h4>
           <p>ANTA grew from US$4.9 billion to US$9.8 billion between 2019 and 2024, about 15% a year.</p>
           <p>Over the same years Nike grew 24%. adidas ended about level (US$26.5 billion to US$25.6 billion), though it sold Reebok in between.</p>
         </div>
-        <div class="card insight-card span-4">
-          <span class="badge">−9.8%</span>
-          <h4>Even Nike can shrink</h4>
+      </div>
+      <div class="pure-u-1-3">
+        <div class="description description-right">
+          <h4>−9.8%: Even Nike can shrink</h4>
           <p>Nike's revenue fell from US$51.4 billion (fiscal 2024) to US$46.3 billion (fiscal 2025).</p>
           <p>It still earns 1.8 times as much as adidas.</p>
         </div>
       </div>
+    </div>
 
-      <div class="grid">
-        <figure class="card chart-card span-12">
-          <span class="tag">Fig 2.3 · Sankey diagram</span>
-          <h3 class="chart-title">Nike's Greater China sales fell 11% while North America grew</h3>
-          <p class="chart-sub">Nike brand revenue by region (left) and product (right), fiscal 2026, US$, with the change on fiscal 2025.</p>
-          <div class="plot"><div id="sankey" class="chart"></div></div>
-          <p class="key"><b>How to read:</b> bar height and band width = revenue; orange bands are footwear; red = a fall of more than 5%.
-            Hover a region or product to highlight its flows.</p>
-        </figure>
+    <div class="pure-g">
+      <div class="pure-u-1-1">
+        <h3>Nike's Greater China sales fell 11% while North America grew</h3>
+        <p>Nike brand revenue by region (left) and product (right), fiscal 2026, US$, with the change on fiscal 2025.</p>
+        <div id="sankey" class="vis-container"></div>
       </div>
+    </div>
 
-      <div class="grid">
-        <div class="card insight-card span-4">
-          <span class="badge">79%</span>
-          <h4>China's fall erased most of North America's gain</h4>
+    <div class="pure-g">
+      <div class="pure-u-1-3">
+        <div class="description description-left">
+          <h4>79%: China's fall erased most of North America's gain</h4>
           <p>North America added US$939 million. Greater China lost US$739 million.</p>
           <p>The loss wipes out 79% of that gain.</p>
         </div>
-        <div class="card insight-card span-4">
-          <span class="badge">65%</span>
-          <h4>Shoes are two-thirds of Nike, and flat</h4>
+      </div>
+      <div class="pure-u-1-3">
+        <div class="description description-left">
+          <h4>65%: Shoes are two-thirds of Nike, and flat</h4>
           <p>Footwear brought in US$29.5 billion, 65% of Nike brand revenue, and grew just 0.05%.</p>
           <p>Clothing grew 3.7%. Growth now comes from apparel, not shoes.</p>
         </div>
-        <div class="card insight-card span-4">
-          <span class="badge">45%</span>
-          <h4>North America is the anchor</h4>
+      </div>
+      <div class="pure-u-1-3">
+        <div class="description description-right">
+          <h4>45%: North America is the anchor</h4>
           <p>North America brings in US$20.5 billion, 45% of Nike brand revenue.</p>
           <p>That is more than Europe, the Middle East, Africa and Greater China combined (US$18.4 billion).</p>
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- ===================== ACT 3: CASE STUDY ===================== -->
-    <section class="act act-3" id="act3">
-
-      <div class="grid">
-        <div class="card text-card span-6">
-          <span class="tag">Act 3 · Case study · 2012 to 2020</span>
+    <!-- ============ ACT 3: CASE STUDY ============ -->
+    <div class="pure-g">
+      <div class="pure-u-1-2">
+        <div class="description description-left">
           <h2>Case study of sneaker collecting: USA</h2>
           <p>Acts 1 and 2 looked at the whole world. This act zooms into one market to see what collecting looks like up close.</p>
           <p>The data comes from StockX, a US-based marketplace where people resell sneakers. It records prices for each shoe model, not who bought them, so it describes StockX and the US market, not every collector.</p>
           <p>Each chart compares a model's resale price with its <strong>retail price</strong>, what it first cost in shops. A <strong>collaboration</strong> is a shoe made with a designer, artist or shop, such as Nike with Off-White.</p>
         </div>
-        <div class="stat-stack span-6">
-          <div class="card stat">
-            <span class="stat-value">11,848</span>
-            <span class="stat-label">shoe models with daily resale prices</span>
-            <span class="stat-caption">StockX · Apr 2012 to Jul 2020</span>
-          </div>
-          <div class="card stat">
-            <span class="stat-value">+10%</span>
-            <span class="stat-label">typical resale price of a collaboration, above retail</span>
-            <span class="stat-caption">Middle value of all prices, 2012 to 2020</span>
-          </div>
-          <div class="card stat decline">
-            <span class="stat-value">−7.5%</span>
-            <span class="stat-label">typical resale price of every other model, below retail</span>
-            <span class="stat-caption">Middle value of all prices, 2012 to 2020</span>
-          </div>
+      </div>
+      <div class="pure-u-1-2">
+        <div class="description description-right">
+          <h3>11,848</h3>
+          <p>shoe models with daily resale prices (StockX, Apr 2012 to Jul 2020)</p>
+          <h3>+10%</h3>
+          <p>typical resale price of a collaboration, above retail (middle value of all prices, 2012 to 2020)</p>
+          <h3>−7.5%</h3>
+          <p>typical resale price of every other model, below retail (middle value of all prices, 2012 to 2020)</p>
         </div>
       </div>
+    </div>
 
-      <div class="grid">
-        <figure class="card chart-card span-8">
-          <span class="tag">Fig 3.1 · Line chart</span>
-          <h3 class="chart-title">Collaboration shoes lost most of their resale premium after 2013</h3>
-          <p class="chart-sub">Typical (middle) resale price compared with retail price, per quarter, 2012 to 2020.</p>
-          <div class="plot"><div id="premium_line" class="chart"></div></div>
-          <p class="key"><b>How to read:</b> above the dashed line = resells for more than it cost new.
-            Hover a line for each quarter. "Typical" is the middle value: half the prices are higher, half lower.</p>
-        </figure>
-        <div class="span-4" style="display: grid; gap: var(--gutter); grid-template-rows: 1fr 1fr;">
-          <div class="card insight-card">
-            <span class="badge">92→18</span>
-            <h4>The collaboration gap shrank</h4>
-            <p>In early 2013 collaborations resold 92 percentage points above ordinary shoes (+140% against +48%).</p>
-            <p>By late 2019 the gap was 18 points.</p>
-          </div>
-          <div class="card insight-card">
-            <span class="badge">+7.5%</span>
-            <h4>Collaborations never fell below retail</h4>
-            <p>Their lowest typical price was +7.5% above retail, in the second quarter of 2019.</p>
-            <p>Ordinary models bottomed at −11.2% in the third quarter of 2019.</p>
-          </div>
+    <div class="pure-g">
+      <div class="pure-u-2-3">
+        <div class="description description-left">
+          <h3>Collaboration shoes lost most of their resale premium after 2013</h3>
+          <p>Typical (middle) resale price compared with retail price, per quarter, 2012 to 2020.</p>
+          <div id="premium_line" class="vis-container"></div>
         </div>
       </div>
-
-      <div class="grid">
-        <figure class="card chart-card span-6">
-          <span class="tag">Fig 3.2 · Cohort heatmap</span>
-          <h3 class="chart-title">Older shoes kept their value; newer ones fell below retail</h3>
-          <p class="chart-sub">Typical resale price vs retail, by year of release (rows) and year of resale (columns).</p>
-          <div class="plot"><div id="cohort_heatmap" class="chart"></div></div>
-          <p class="key"><b>How to read:</b> orange = above retail, blue = below. Read a row left to right to follow one year's shoes as they age.
-            Hover a square for details.</p>
-        </figure>
-
-        <figure class="card chart-card span-6">
-          <span class="tag">Fig 3.3 · Density heatmap</span>
-          <h3 class="chart-title">Most shoes resell near retail; only about one in ten doubles</h3>
-          <p class="chart-sub">Number of shoe models in each band of retail price and typical resale price (US$).</p>
-          <div class="plot"><div id="price_density" class="chart"></div></div>
-          <p class="key"><b>How to read:</b> darker = more models. Squares above the "resale = 2 × retail" line resell for more than double.
-            Hover a band for the count.</p>
-        </figure>
+      <div class="pure-u-1-3">
+        <div class="description description-right">
+          <h4>92→18: The collaboration gap shrank</h4>
+          <p>In early 2013 collaborations resold 92 percentage points above ordinary shoes (+140% against +48%).</p>
+          <p>By late 2019 the gap was 18 points.</p>
+          <h4>+7.5%: Collaborations never fell below retail</h4>
+          <p>Their lowest typical price was +7.5% above retail, in the second quarter of 2019.</p>
+          <p>Ordinary models bottomed at −11.2% in the third quarter of 2019.</p>
+        </div>
       </div>
+    </div>
 
-      <div class="grid">
-        <div class="card insight-card span-4">
-          <span class="badge">13 of 13</span>
-          <h4>2020 lifted every release year</h4>
+    <div class="pure-g">
+      <div class="pure-u-1-2">
+        <div class="description description-left">
+          <h3>Older shoes kept their value; newer ones fell below retail</h3>
+          <p>Typical resale price vs retail, by year of release (rows) and year of resale (columns).</p>
+          <div id="cohort_heatmap" class="vis-container"></div>
+        </div>
+      </div>
+      <div class="pure-u-1-2">
+        <div class="description description-right">
+          <h3>Most shoes resell near retail; only about one in ten doubles</h3>
+          <p>Number of shoe models in each band of retail price and typical resale price (US$).</p>
+          <div id="price_density" class="vis-container"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pure-g">
+      <div class="pure-u-1-3">
+        <div class="description description-left">
+          <h4>13 of 13: 2020 lifted every release year</h4>
           <p>From 2019 to January–July 2020, the typical price rose for every release year, by 22 percentage points on average.</p>
-          <p class="small">The data does not say why.</p>
+          <p class="small-font">The data does not say why.</p>
         </div>
-        <div class="card insight-card span-4">
-          <span class="badge">0 of 54</span>
-          <h4>Old shoes never sold below retail</h4>
+      </div>
+      <div class="pure-u-1-3">
+        <div class="description description-left">
+          <h4>0 of 54: Old shoes never sold below retail</h4>
           <p>None of the 54 squares for shoes released from 2007 to 2012 is below retail.</p>
           <p>For shoes released since 2015, 12 of 20 squares are below retail.</p>
         </div>
-        <div class="card insight-card span-4">
-          <span class="badge">~56%</span>
-          <h4>Over half the models sell below retail</h4>
+      </div>
+      <div class="pure-u-1-3">
+        <div class="description description-right">
+          <h4>~56%: Over half the models sell below retail</h4>
           <p>Roughly 56% of models sit below the "resale = retail" line. About 35% sit between the two lines, and about 9% above the double line.</p>
-          <p class="small">Estimated from the middle of each price band.</p>
+          <p class="small-font">Estimated from the middle of each price band.</p>
         </div>
       </div>
+    </div>
 
-      <div class="grid">
-        <div class="card insight-card span-4">
-          <span class="badge">+7.1%</span>
-          <h4>Jordan beats Nike and adidas</h4>
+    <div class="pure-g">
+      <div class="pure-u-1-3">
+        <div class="description description-left">
+          <h4>+7.1%: Jordan beats Nike and adidas</h4>
           <p>The typical Jordan model resells 7.1% above retail. The typical Nike model sells 4.2% below it.</p>
           <p>adidas is 28.6% below retail.</p>
         </div>
-        <div class="card insight-card span-4">
-          <span class="badge">468,674</span>
-          <h4>Jordan sold more pairs than Nike</h4>
+      </div>
+      <div class="pure-u-1-3">
+        <div class="description description-left">
+          <h4>468,674: Jordan sold more pairs than Nike</h4>
           <p>In the last 12 months of data, 2,335 Jordan models sold 468,674 pairs.</p>
           <p>Nike's 5,407 models sold 438,821 pairs.</p>
         </div>
-        <div class="card insight-card span-4">
-          <span class="badge">69%</span>
-          <h4>The Nike group runs StockX</h4>
+      </div>
+      <div class="pure-u-1-3">
+        <div class="description description-right">
+          <h4>69%: The Nike group runs StockX</h4>
           <p>Nike, Jordan and Converse make up 67% of models and 69% of the pairs sold in the last 12 months.</p>
-          <p class="small">Out of 1.38 million pairs.</p>
+          <p class="small-font">Out of 1.38 million pairs.</p>
         </div>
       </div>
-    </section>
-  </main>
+    </div>
+
+  </div> <!-- end page -->
 
   <script>
     // One vegaEmbed call per chart, as in the Week 8 and Week 9 studio examples.
-    // "actions": false hides the "Open in Vega Editor" menu.
-    var vg_1 = "js/symbol_map.vg.json";
-    vegaEmbed("#symbol_map", vg_1, {"actions": false}).catch(console.error);
-
-    // Flow map: Greenwich-centred (standard Equal Earth) version. For the Pacific-centred version use the line above instead,
-    // and change the footnote under the flow map.
-    // var vg_2 = "js/flow_map.vg.json";
-    var vg_2 = "js/flow_map_standard.vg.json";
-    vegaEmbed("#flow_map", vg_2, {"actions": false}).catch(console.error);
-
-    var vg_3 = "js/choropleth_map.vg.json";
-    vegaEmbed("#choropleth_map", vg_3, {"actions": false}).catch(console.error);
-
-    var vg_4 = "js/bump_chart.vg.json";
-    vegaEmbed("#bump_chart", vg_4, {"actions": false}).catch(console.error);
-
-    var vg_5 = "js/treemap.vg.json";
-    vegaEmbed("#treemap", vg_5, {"actions": false}).catch(console.error);
-
-    var vg_6 = "js/sankey.vg.json";
-    vegaEmbed("#sankey", vg_6, {"actions": false}).catch(console.error);
-
-    var vg_7 = "js/premium_line.vg.json";
-    vegaEmbed("#premium_line", vg_7, {"actions": false}).catch(console.error);
-
-    var vg_8 = "js/cohort_heatmap.vg.json";
-    vegaEmbed("#cohort_heatmap", vg_8, {"actions": false}).catch(console.error);
-
-    var vg_9 = "js/price_density.vg.json";
-    vegaEmbed("#price_density", vg_9, {"actions": false}).catch(console.error);
+    vegaEmbed("#symbol_map", "js/symbol_map.vg.json", { "actions": false });
+    // Flow map: use js/flow_map.vg.json instead for the Pacific-centred version.
+    vegaEmbed("#flow_map", "js/flow_map_standard.vg.json", { "actions": false });
+    vegaEmbed("#choropleth_map", "js/choropleth_map.vg.json", { "actions": false });
+    vegaEmbed("#bump_chart", "js/bump_chart.vg.json", { "actions": false });
+    vegaEmbed("#treemap", "js/treemap.vg.json", { "actions": false });
+    vegaEmbed("#sankey", "js/sankey.vg.json", { "actions": false });
+    vegaEmbed("#premium_line", "js/premium_line.vg.json", { "actions": false });
+    vegaEmbed("#cohort_heatmap", "js/cohort_heatmap.vg.json", { "actions": false });
+    vegaEmbed("#price_density", "js/price_density.vg.json", { "actions": false });
   </script>
 </body>
+
 </html>

@@ -127,13 +127,12 @@
             "signal": "'$' + format(datum.value / 1000, ',.1f') + ' bn   ' + format(datum.pct_change, '+.1%') + ' on last year'"
           },
           "fontSize": {"value": 12},
-          "fill": {"signal": "datum.pct_change < -0.05 ? '#E5243B' : '#5C5A73'"},
           "fontWeight": {"signal": "datum.pct_change < -0.05 ? 700 : 400"}
         }
       }
     },
     {
-      "description": "Callout under the one region with a large drop",
+      "description": "Callout",
       "type": "text",
       "from": {"data": "nodes"},
       "interactive": false,
