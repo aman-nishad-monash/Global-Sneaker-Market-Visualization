@@ -11,8 +11,6 @@
   ],
   "projection": {
     "type": "equalEarth",
-    "scale": {"expr": "min(width / 5.4133, height / 2.3783)"},
-    "translate": {"expr": "[width / 2, height / 2 + min(width / 5.4133, height / 2.3783) * 0.12825]"}
   },
   "layer": [
     {
