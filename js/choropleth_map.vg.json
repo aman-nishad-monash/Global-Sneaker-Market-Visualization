@@ -9,7 +9,9 @@
       "bind": {"input": "range", "min": 2002, "max": 2024, "step": 1, "name": "Year: "}
     }
   ],
-  "projection": {"type": "equalEarth"},
+  "projection": {
+    "type": "equalEarth"
+  },
   "layer": [
     {
       "data": {"url": "data/oceans.topojson", "format": {"type": "topojson", "feature": "oceans"}},
