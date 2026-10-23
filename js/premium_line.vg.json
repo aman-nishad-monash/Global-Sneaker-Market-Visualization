@@ -25,7 +25,7 @@
     },
     "color": {
       "field": "grp", "type": "nominal", "legend": null,
-      "scale": {"domain": ["Collaboration", "Not a collaboration"], "range": ["#7A3CFF", "#45425E"]}
+      "scale": {"domain": ["Collaboration", "Not a collaboration"], "range": ["#0F766E", "#45425E"]}
     }
   },
   "layer": [
@@ -67,7 +67,7 @@
     {
       "description": "Callouts: the 2013 collaboration peak, and 2018 when ordinary shoes fell below retail (dates match the quarter dates above)",
       "data": {"values": [
-        {"yr": 2013, "mo": 1, "y": 1.40, "y_text": 1.40, "t": ["2013 peak: collaborations resold", "at more than double retail (+140%)"]},
+        {"yr": 2013, "mo": 1, "y": 1.40, "y_text": 1.40, "t": ["  2013 peak: collaborations resold", "  at more than double retail (+140%)"]},
         {"yr": 2018, "mo": 4, "y": -0.0417, "y_text": -0.08, "t": ["2018: ordinary shoes", "fall below retail"]}
       ]},
       "transform": [{"calculate": "datetime(datum.yr, datum.mo, 15)", "as": "note_date"}],
@@ -80,7 +80,7 @@
         },
         {
           "transform": [{"filter": "datum.yr == 2013"}],
-          "mark": {"type": "text", "align": "left", "baseline": "middle", "dx": 12, "fontSize": 12, "fontWeight": 700, "lineHeight": 15, "color": "#6A2FE0"},
+          "mark": {"type": "text", "align": "left", "baseline": "middle", "dx": 12, "fontSize": 12, "fontWeight": 700, "lineHeight": 15, "color": "#0F766E"},
           "encoding": {"y": {"field": "y_text", "type": "quantitative"}, "text": {"field": "t"}}
         },
         {

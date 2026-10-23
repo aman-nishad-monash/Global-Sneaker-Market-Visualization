@@ -113,7 +113,7 @@
           "fill": {"scale": "colour", "field": "name"},
           "cursor": {"value": "pointer"},
           "tooltip": {
-            "signal": "{'Brand': datum.name, 'Company': datum.company, 'Revenue': '$' + format(datum.usd_m, ',.0f') + ' million', 'Financial year': datum.fiscal_year, 'Share of the eight companies': format(datum.share, '.1%')}"
+            "signal": "{'Brand': datum.name, 'Company': datum.company, 'Revenue': '$' + format(datum.usd_m / 1000, ',.2f') + ' billion', 'Financial year': datum.fiscal_year, 'Share of the eight companies': format(datum.share, '.1%')}"
           }
         },
         "update": {
@@ -151,7 +151,7 @@
           "fontWeight": {"value": 700},
           "fill": {"signal": "luminance(scale('colour', datum.name)) > 0.33 ? '#15131F' : 'white'"},
           "tooltip": {
-            "signal": "{'Brand': datum.name, 'Company': datum.company, 'Revenue': '$' + format(datum.usd_m, ',.0f') + ' million', 'Financial year': datum.fiscal_year, 'Share of the eight companies': format(datum.share, '.1%')}"
+            "signal": "{'Brand': datum.name, 'Company': datum.company, 'Revenue': '$' + format(datum.usd_m / 1000, ',.2f') + ' billion', 'Financial year': datum.fiscal_year, 'Share of the eight companies': format(datum.share, '.1%')}"
           }
         },
         "update": {

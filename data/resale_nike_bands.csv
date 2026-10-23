@@ -1,0 +1,6 @@
+order,band,side,n_models,share,median_gain,collab_share
+1,Lose over 30%,Loses money,1137,0.2103,-65.0000,0.0193
+2,Lose up to 30%,Loses money,1702,0.3148,-23.0000,0.0188
+3,Gain 0% to 50%,Makes money,1561,0.2887,22.0000,0.0410
+4,Gain 50% to 100%,Makes money,432,0.0799,93.0000,0.0856
+5,Gain over 100%,Makes money,575,0.1063,230.0000,0.2209

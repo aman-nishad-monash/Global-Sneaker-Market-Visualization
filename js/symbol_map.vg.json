@@ -12,7 +12,7 @@
     {
       "width": 820,
       "height": 400,
-      "projection": {"type": "equalEarth", "scale": 151.5, "translate": [410, 219.4]},
+      "projection": {"type": "equalEarth"},
       "layer": [
         {
           "data": {"url": "data/oceans.topojson", "format": {"type": "topojson", "feature": "oceans"}},
@@ -38,7 +38,8 @@
             {"joinaggregate": [{"op": "sum", "field": "value", "as": "world_total"}], "groupby": ["flow"]},
             {"calculate": "datum.value / datum.world_total", "as": "world_share"},
             {"window": [{"op": "row_number", "as": "rank"}], "sort": [{"field": "value", "order": "descending"}], "groupby": ["flow"]},
-            {"filter": "datum.rank <= 5"}
+            {"filter": "datum.rank <= 5"},
+            {"calculate": "(datum.value) == 0 ? '$0 billion' : (datum.value) < 10 ? 'under $0.01 billion' : '$' + format((datum.value) / 1000, (datum.value) >= 1000 ? ',.1f' : ',.3f') + ' billion'", "as": "value_bn"}
           ],
           "encoding": {
             "longitude": {"field": "lon", "type": "quantitative"},
@@ -48,7 +49,7 @@
               {"field": "year", "type": "quantitative", "title": "Year", "format": "d"},
               {"field": "flow", "type": "nominal", "title": "Top five as"},
               {"field": "rank", "type": "quantitative", "title": "Rank"},
-              {"field": "value", "type": "quantitative", "title": "Value (US$ million)", "format": ",.0f"},
+              {"field": "value_bn", "type": "nominal", "title": "Value"},
               {"field": "world_share", "type": "quantitative", "title": "Share of world total", "format": ".1%"}
             ]
           },

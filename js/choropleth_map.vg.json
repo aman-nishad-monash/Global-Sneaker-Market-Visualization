@@ -9,11 +9,7 @@
       "bind": {"input": "range", "min": 2002, "max": 2024, "step": 1, "name": "Year: "}
     }
   ],
-  "projection": {
-    "type": "equalEarth",
-    "scale": {"expr": "min(width / 5.4133, height / 2.3783)"},
-    "translate": {"expr": "[width / 2, height / 2 + min(width / 5.4133, height / 2.3783) * 0.12825]"}
-  },
+  "projection": {"type": "equalEarth"},
   "layer": [
     {
       "data": {"url": "data/oceans.topojson", "format": {"type": "topojson", "feature": "oceans"}},
@@ -43,15 +39,17 @@
       "transform": [
         {"filter": "datum.year == Year_selection"},
         {"calculate": "datum.exports_usd_m + datum.imports_usd_m", "as": "total_trade"},
-        {"calculate": "datum.exports_usd_m - datum.imports_usd_m", "as": "net_trade"}
+        {"calculate": "datum.exports_usd_m - datum.imports_usd_m", "as": "net_trade"},
+        {"calculate": "(datum.exports_usd_m) == 0 ? '$0 billion' : (datum.exports_usd_m) < 10 ? 'under $0.01 billion' : '$' + format((datum.exports_usd_m) / 1000, (datum.exports_usd_m) >= 1000 ? ',.1f' : ',.3f') + ' billion'", "as": "exports_bn"},
+        {"calculate": "(datum.imports_usd_m) == 0 ? '$0 billion' : (datum.imports_usd_m) < 10 ? 'under $0.01 billion' : '$' + format((datum.imports_usd_m) / 1000, (datum.imports_usd_m) >= 1000 ? ',.1f' : ',.3f') + ' billion'", "as": "imports_bn"}
       ],
       "encoding": {
         "tooltip": [
           {"field": "country", "type": "nominal", "title": "Country"},
           {"field": "year", "type": "quantitative", "title": "Year", "format": "d"},
           {"field": "balance_ratio", "type": "quantitative", "title": "Balance (-100% to +100%)", "format": "+.0%"},
-          {"field": "exports_usd_m", "type": "quantitative", "title": "Exports (US$ million)", "format": ",.0f"},
-          {"field": "imports_usd_m", "type": "quantitative", "title": "Imports (US$ million)", "format": ",.0f"}
+          {"field": "exports_bn", "type": "nominal", "title": "Exports"},
+          {"field": "imports_bn", "type": "nominal", "title": "Imports"}
         ]
       },
       "layer": [

@@ -1,0 +1,85 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 360,
+  "data": {
+    "url": "data/resale_line_profit.csv",
+    "format": {"type": "csv", "parse": {"rank": "number", "n_models": "number", "pairs_sold": "number", "retail": "number", "resale": "number", "gain": "number", "premium": "number", "share_of_pairs": "number"}}
+  },
+  "transform": [
+    {"calculate": "'+$' + format(datum.gain, ',.0f')", "as": "gain_label"}
+  ],
+  "encoding": {
+    "y": {
+      "field": "shoe", "type": "nominal", "title": null,
+      "sort": {"field": "gain", "op": "max", "order": "descending"},
+      "axis": {"labelLimit": 230, "labelFontSize": 12.5, "domain": false, "ticks": false, "grid": true, "gridColor": "#F0EEF8"}
+    }
+  },
+  "layer": [
+    {
+      "description": "The gap between the two prices: the longer the line, the more money per pair",
+      "mark": {"type": "rule", "strokeWidth": 4, "color": "#CFCDE3", "strokeCap": "round"},
+      "encoding": {
+        "x": {"field": "retail", "type": "quantitative", "title": "Price per pair (US$)",
+              "scale": {"domain": [0, 520], "nice": false},
+              "axis": {"format": "$,.0f", "values": [0, 100, 200, 300, 400, 500], "grid": false, "titleColor": "#5C5A73", "titleFontWeight": 500}},
+        "x2": {"field": "resale"}
+      }
+    },
+    {
+      "description": "Retail price: what the shoe costs in the shop",
+      "mark": {"type": "circle", "size": 150, "opacity": 1, "stroke": "white", "strokeWidth": 1.5},
+      "encoding": {
+        "x": {"field": "retail", "type": "quantitative"},
+        "color": {"datum": "Retail price", "type": "nominal", "scale": {"domain": ["Retail price", "Nike", "Jordan", "adidas"], "range": ["#9C9AB5", "#FF5A1F", "#B83A00", "#15131F"]}},
+        "tooltip": [
+          {"field": "shoe", "title": "Shoe line"},
+          {"field": "retail", "type": "quantitative", "title": "Typical retail price", "format": "$,.0f"},
+          {"field": "resale", "type": "quantitative", "title": "Typical resale price", "format": "$,.0f"},
+          {"field": "gain", "type": "quantitative", "title": "Gain per pair", "format": "$,.0f"},
+          {"field": "premium", "type": "quantitative", "title": "Above retail by", "format": ".0%"},
+          {"field": "n_models", "type": "quantitative", "title": "Models in the line", "format": ","},
+          {"field": "pairs_sold", "type": "quantitative", "title": "Pairs sold, year to Aug 2020", "format": ","}
+        ]
+      }
+    },
+    {
+      "description": "Typical resale price on StockX, coloured by brand",
+      "mark": {"type": "circle", "size": 210, "opacity": 1, "stroke": "white", "strokeWidth": 1.5},
+      "encoding": {
+        "x": {"field": "resale", "type": "quantitative"},
+        "color": {
+          "field": "brand", "type": "nominal", "title": null,
+          "scale": {"domain": ["Retail price", "Nike", "Jordan", "adidas"], "range": ["#9C9AB5", "#FF5A1F", "#B83A00", "#15131F"]},
+          "legend": {"orient": "none", "legendX": 0, "legendY": 408, "direction": "horizontal", "symbolType": "circle",
+                     "labelExpr": "datum.value == 'Retail price' ? 'Retail price' : datum.value + ' resale price'"}
+        },
+        "tooltip": [
+          {"field": "shoe", "title": "Shoe line"},
+          {"field": "retail", "type": "quantitative", "title": "Typical retail price", "format": "$,.0f"},
+          {"field": "resale", "type": "quantitative", "title": "Typical resale price", "format": "$,.0f"},
+          {"field": "gain", "type": "quantitative", "title": "Gain per pair", "format": "$,.0f"},
+          {"field": "premium", "type": "quantitative", "title": "Above retail by", "format": ".0%"},
+          {"field": "n_models", "type": "quantitative", "title": "Models in the line", "format": ","},
+          {"field": "pairs_sold", "type": "quantitative", "title": "Pairs sold, year to Aug 2020", "format": ","}
+        ]
+      }
+    },
+    {
+      "description": "The gain written next to the resale dot",
+      "mark": {"type": "text", "align": "left", "dx": 14, "fontSize": 13, "fontWeight": 700, "color": "#15131F"},
+      "encoding": {
+        "x": {"field": "resale", "type": "quantitative"},
+        "text": {"field": "gain_label"}
+      }
+    }
+  ],
+  "config": {
+    "font": "DM Sans, 'Helvetica Neue', Arial, sans-serif",
+    "view": {"stroke": null},
+    "padding": {"bottom": 50, "top": 5, "left": 5, "right": 5},
+    "axis": {"labelColor": "#15131F", "domainColor": "#D3D0E4", "tickColor": "#D3D0E4"},
+    "legend": {"labelFontSize": 12.5, "titleFontSize": 12.5, "titleColor": "#5C5A73", "labelColor": "#15131F"}
+  }
+}

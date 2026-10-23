@@ -1,0 +1,45 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 340,
+  "data": {
+    "url": "data/resale_nike_bands.csv",
+    "format": {"type": "csv", "parse": {"order": "number", "n_models": "number", "share": "number", "median_gain": "number", "collab_share": "number"}}
+  },
+  "transform": [
+    {"calculate": "format(datum.n_models, ',') + ' models'", "as": "count_label"},
+    {"calculate": "'typical ' + (datum.median_gain < 0 ? '−$' + format(-datum.median_gain, ',.0f') : '+$' + format(datum.median_gain, ',.0f')) + ' a pair'", "as": "gain_label"}
+  ],
+  "encoding": {
+    "x": {"field": "band", "type": "ordinal", "title": null, "sort": {"field": "order"}, "axis": {"labelAngle": 0, "labelFontSize": 13, "labelFontWeight": 600, "labelLimit": 150, "domain": false, "ticks": false}}
+  },
+  "layer": [
+    {
+      "mark": {"type": "bar", "cornerRadiusTop": 4, "size": 78},
+      "encoding": {
+        "y": {"field": "n_models", "type": "quantitative", "title": "Nike models", "axis": {"format": ",.0f", "values": [0, 500, 1000, 1500], "gridColor": "#EDE7DC", "titleColor": "#6B6259", "titleFontWeight": 500}},
+        "color": {"field": "side", "type": "nominal", "legend": null, "scale": {"domain": ["Loses money", "Makes money"], "range": ["#8e7575", "#54278F"]}},
+        "tooltip": [
+          {"field": "band", "title": "Resale price against retail"},
+          {"field": "n_models", "type": "quantitative", "title": "Nike models", "format": ","},
+          {"field": "share", "type": "quantitative", "title": "Share of Nike models", "format": ".1%"},
+          {"field": "gain_label", "title": "Typical result"},
+          {"field": "collab_share", "type": "quantitative", "title": "Collaborations", "format": ".0%"}
+        ]
+      }
+    },
+    {
+      "mark": {"type": "text", "dy": -26, "fontSize": 14, "fontWeight": 700, "color": "#231F20"},
+      "encoding": {"y": {"field": "n_models", "type": "quantitative"}, "text": {"field": "count_label"}}
+    },
+    {
+      "mark": {"type": "text", "dy": -8, "fontSize": 12, "color": "#6B6259"},
+      "encoding": {"y": {"field": "n_models", "type": "quantitative"}, "text": {"field": "gain_label"}}
+    }
+  ],
+  "config": {
+    "font": "DM Sans, 'Helvetica Neue', Arial, sans-serif",
+    "view": {"stroke": null},
+    "axis": {"labelColor": "#231F20"}
+  }
+}

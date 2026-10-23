@@ -20,7 +20,8 @@
       "as": "colour_group"
     },
     {"calculate": "'$' + format(datum.revenue_usd_m / 1000, ',.1f') + ' bn'", "as": "revenue_label"},
-    {"calculate": "datum.note == '' ? '—' : datum.note", "as": "note_text"}
+    {"calculate": "datum.note == '' ? '—' : datum.note", "as": "note_text"},
+    {"calculate": "(datum.revenue_usd_m) == 0 ? '$0 billion' : (datum.revenue_usd_m) < 10 ? 'under $0.01 billion' : '$' + format((datum.revenue_usd_m) / 1000, (datum.revenue_usd_m) >= 1000 ? ',.1f' : ',.3f') + ' billion'", "as": "revenue_bn"}
   ],
   "encoding": {
     "x": {
@@ -59,12 +60,7 @@
       {"field": "chart_year", "type": "ordinal", "title": "Plotted year"},
       {"field": "fiscal_year", "type": "ordinal", "title": "Financial year"},
       {"field": "rank", "type": "ordinal", "title": "Rank"},
-      {
-        "field": "revenue_usd_m",
-        "type": "quantitative",
-        "title": "Revenue (US$ million)",
-        "format": ",.0f"
-      },
+      {"field": "revenue_bn", "type": "nominal", "title": "Revenue"},
       {"field": "currency", "type": "nominal", "title": "Reported in"},
       {"field": "note_text", "type": "nominal", "title": "Note"}
     ]

@@ -36,7 +36,7 @@
       "encoding": {
         "color": {
           "field": "median_premium", "type": "quantitative",
-          "scale": {"domain": [-0.5, 1.5], "domainMid": 0, "clamp": true, "range": ["#5B2A86", "#FFF6E5", "#D13A00"], "interpolate": "lab"},
+          "scale": {"domain": [-0.5, 0, 1.5], "clamp": true, "range": ["#A61E2A", "#F5F5F2", "#2B6CB0"], "interpolate": "lab"},
           "legend": {
             "title": "Typical resale price vs retail", "orient": "bottom", "direction": "horizontal",
             "gradientLength": 300, "values": [-0.5, 0, 0.5, 1, 1.5],
@@ -46,11 +46,10 @@
       }
     },
     {
-      "mark": {"type": "text", "fontSize": 12, "fontWeight": 500},
-      "encoding": {
-        "text": {"field": "median_premium", "format": "+.0%"},
-        "color": {"condition": {"test": "datum.median_premium > 0.7 || datum.median_premium < -0.3", "value": "white"}, "value": "#15131F"}
-      }
+      "description": "The value is written only in the highlighted square; the rest are in the tooltip and the legend",
+      "transform": [{"filter": "datum.release_year == 2009 && datum.sale_year == 2016"}],
+      "mark": {"type": "text", "fontSize": 12, "fontWeight": 700, "color": "white"},
+      "encoding": {"text": {"field": "median_premium", "format": "+.0%"}}
     },
     {
       "description": "Callout: outline the peak square and explain it in the empty corner",
@@ -60,7 +59,7 @@
     {
       "data": {"values": [{"sale_year": 2012, "release_year": 2017, "t": ["Peak: 2009 releases resold", "at +168% in 2016 (outlined)"]}]},
       "transform": [],
-      "mark": {"type": "text", "align": "left", "baseline": "middle", "dx": -10, "fontSize": 12, "fontWeight": 700, "lineHeight": 15, "color": "#D13A00"},
+      "mark": {"type": "text", "align": "left", "baseline": "middle", "dx": -10, "fontSize": 12, "fontWeight": 700, "lineHeight": 15, "color": "#231F20"},
       "encoding": {"text": {"field": "t"}, "tooltip": null}
     }
   ],

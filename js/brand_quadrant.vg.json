@@ -1,0 +1,125 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 440,
+  "data": {
+    "url": "data/resale_brand_quadrant.csv",
+    "format": {"type": "csv", "parse": {"n_models": "number", "pairs_sold": "number", "pairs_per_model": "number", "median_premium": "number", "share_of_pairs": "number", "market_pairs_per_model": "number"}}
+  },
+  "transform": [
+    {"calculate": "indexof(['Nike', 'Jordan', 'adidas', 'Converse'], datum.brand) >= 0 ? datum.brand : 'Other brands'", "as": "colour_group"}
+  ],
+  "layer": [
+    {
+      "description": "Dashed line at the average shoe in this data: 117 pairs sold per model",
+      "mark": {"type": "rule", "color": "#9C9AB5", "strokeDash": [5, 4], "strokeWidth": 1.2},
+      "encoding": {
+        "x": {"field": "market_pairs_per_model", "type": "quantitative", "aggregate": "max",
+              "scale": {"domain": [0, 275], "nice": false},
+              "axis": {"values": [0, 50, 100, 150, 200, 250], "grid": false, "title": "Pairs sold per model in the year to Aug 2020: how easily a shoe from this brand sells", "titleColor": "#5C5A73", "titleFontWeight": 500}}
+      }
+    },
+    {
+      "description": "Dashed line at retail price: above it a typical shoe resells for more than it cost",
+      "mark": {"type": "rule", "color": "#9C9AB5", "strokeDash": [5, 4], "strokeWidth": 1.2},
+      "encoding": {
+        "y": {"datum": 0, "type": "quantitative",
+              "scale": {"domain": [-0.36, 0.36], "nice": false},
+              "axis": {"format": "+.0%", "values": [-0.3, -0.2, -0.1, 0, 0.1, 0.2, 0.3], "gridColor": "#F0EEF8",
+                       "title": "Typical resale price compared with retail", "titleColor": "#5C5A73", "titleFontWeight": 500,
+                       "labelExpr": "datum.value == 0 ? 'Retail' : format(datum.value, '+.0%')"}}
+      }
+    },
+    {
+      "description": "One bubble per brand",
+      "mark": {"type": "circle", "opacity": 0.9, "strokeWidth": 2},
+      "encoding": {
+        "x": {"field": "pairs_per_model", "type": "quantitative"},
+        "y": {"field": "median_premium", "type": "quantitative"},
+        "size": {
+          "field": "n_models", "type": "quantitative", "title": "Models in the data",
+          "scale": {"type": "linear", "zero": true, "domain": [0, 5500], "range": [0, 2800]},
+          "legend": {"orient": "right", "values": [200, 1000, 5000], "format": ",.0f", "titleLimit": 150, "symbolFillColor": "#D3D0E4", "symbolStrokeColor": "#9C9AB5", "symbolOpacity": 0.6}
+        },
+        "color": {
+          "field": "colour_group", "type": "nominal", "legend": null,
+          "scale": {"domain": ["Nike", "Jordan", "adidas", "Converse", "Other brands"], "range": ["#FF5A1F", "#B83A00", "#15131F", "#FFA680", "#9C9AB5"]}
+        },
+        "stroke": {
+          "field": "colour_group", "type": "nominal", "legend": null,
+          "scale": {"domain": ["Nike", "Jordan", "adidas", "Converse", "Other brands"], "range": ["#FF5A1F", "#B83A00", "#15131F", "#FFA680", "#9C9AB5"]}
+        },
+        "tooltip": [
+          {"field": "brand", "title": "Brand"},
+          {"field": "pairs_per_model", "type": "quantitative", "title": "Pairs sold per model", "format": ",.0f"},
+          {"field": "median_premium", "type": "quantitative", "title": "Typical resale vs retail", "format": "+.1%"},
+          {"field": "pairs_sold", "type": "quantitative", "title": "Pairs sold, year to Aug 2020", "format": ","},
+          {"field": "share_of_pairs", "type": "quantitative", "title": "Share of all pairs sold", "format": ".1%"},
+          {"field": "n_models", "type": "quantitative", "title": "Models in the data", "format": ","}
+        ]
+      }
+    },
+    {
+      "description": "Nike has the biggest bubble, so its name fits inside it",
+      "transform": [{"filter": "datum.brand == 'Nike'"}],
+      "mark": {"type": "text", "fontSize": 12.5, "fontWeight": 700, "color": "white"},
+      "encoding": {"x": {"field": "pairs_per_model", "type": "quantitative"}, "y": {"field": "median_premium", "type": "quantitative"}, "text": {"field": "brand"}}
+    },
+    {
+      "description": "Jordan and adidas have medium bubbles, so their names sit just above them",
+      "transform": [{"filter": "indexof(['Jordan', 'adidas'], datum.brand) >= 0"}],
+      "mark": {"type": "text", "align": "center", "dy": -29, "fontSize": 12.5, "fontWeight": 700, "color": "#15131F"},
+      "encoding": {"x": {"field": "pairs_per_model", "type": "quantitative"}, "y": {"field": "median_premium", "type": "quantitative"}, "text": {"field": "brand"}}
+    },
+    {
+      "description": "Names of the smaller bubbles, placed beside them",
+      "transform": [{"filter": "indexof(['Converse', 'Vans', 'PUMA', 'New Balance'], datum.brand) >= 0"}],
+      "mark": {"type": "text", "align": "left", "dx": 11, "fontSize": 12.5, "fontWeight": 600, "color": "#15131F"},
+      "encoding": {"x": {"field": "pairs_per_model", "type": "quantitative"}, "y": {"field": "median_premium", "type": "quantitative"}, "text": {"field": "brand"}}
+    },
+    {
+      "description": "Names of the smallest bubbles, placed above or below so they do not overlap",
+      "transform": [{"filter": "indexof(['ASICS', 'Under Armour'], datum.brand) >= 0"}],
+      "mark": {"type": "text", "align": "center", "dy": -13, "fontSize": 12.5, "fontWeight": 600, "color": "#15131F"},
+      "encoding": {"x": {"field": "pairs_per_model", "type": "quantitative"}, "y": {"field": "median_premium", "type": "quantitative"}, "text": {"field": "brand"}}
+    },
+    {
+      "transform": [{"filter": "datum.brand == 'Reebok'"}],
+      "mark": {"type": "text", "align": "center", "dy": 14, "fontSize": 12.5, "fontWeight": 600, "color": "#15131F"},
+      "encoding": {"x": {"field": "pairs_per_model", "type": "quantitative"}, "y": {"field": "median_premium", "type": "quantitative"}, "text": {"field": "brand"}}
+    },
+    {
+      "description": "Label for the dashed vertical line (the average shoe)",
+      "transform": [
+        {"filter": "datum.brand == 'Jordan'"},
+        {"calculate": "'Average shoe: ' + format(datum.market_pairs_per_model, ',.0f') + ' pairs per model'", "as": "avg_label"},
+        {"calculate": "0.27", "as": "label_y"}
+      ],
+      "mark": {"type": "text", "align": "left", "dx": 7, "fontSize": 11.5, "color": "#7A7893"},
+      "encoding": {"x": {"field": "market_pairs_per_model", "type": "quantitative"}, "y": {"field": "label_y", "type": "quantitative"}, "text": {"field": "avg_label"}}
+    },
+    {
+      "description": "Plain-language names for the four corners",
+      "data": {"values": [
+        {"x": 272, "y": 0.34, "t": "Sells easily and holds its value"},
+        {"x": 272, "y": -0.34, "t": "Sells easily but loses value"}
+      ]},
+      "mark": {"type": "text", "align": "right", "fontSize": 12, "fontStyle": "italic", "fontWeight": 700, "color": "#5C5A73"},
+      "encoding": {"x": {"field": "x", "type": "quantitative"}, "y": {"field": "y", "type": "quantitative"}, "text": {"field": "t"}}
+    },
+    {
+      "data": {"values": [
+        {"x": 3, "y": 0.34, "t": "Sells slowly but holds its value"},
+        {"x": 3, "y": -0.34, "t": "Sells slowly and loses value"}
+      ]},
+      "mark": {"type": "text", "align": "left", "fontSize": 12, "fontStyle": "italic", "fontWeight": 700, "color": "#5C5A73"},
+      "encoding": {"x": {"field": "x", "type": "quantitative"}, "y": {"field": "y", "type": "quantitative"}, "text": {"field": "t"}}
+    }
+  ],
+  "config": {
+    "font": "DM Sans, 'Helvetica Neue', Arial, sans-serif",
+    "view": {"stroke": null},
+    "axis": {"labelColor": "#15131F", "domainColor": "#D3D0E4", "tickColor": "#D3D0E4"},
+    "legend": {"labelFontSize": 12.5, "titleFontSize": 12.5, "titleColor": "#5C5A73", "labelColor": "#15131F"}
+  }
+}

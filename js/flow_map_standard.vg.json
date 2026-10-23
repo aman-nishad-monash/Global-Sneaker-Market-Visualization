@@ -10,11 +10,7 @@
     }
   ],
   "projection": {
-    "type": "equalEarth",
-    "scale": {"expr": "min(width / 5.4133, height / 2.3783)"},
-    "translate": {
-      "expr": "[width / 2, height / 2 + min(width / 5.4133, height / 2.3783) * 0.12825]"
-    }
+    "type": "equalEarth"
   },
   "layer": [
     {
@@ -48,7 +44,7 @@
           "title": "Exporting region",
           "scale": {
             "domain": ["Southeast Asia", "East Asia", "Europe", "Other regions"],
-            "range": ["#2E9E4F", "#8B5A2B", "#F2B600", "#A9A6C4"]
+            "range": ["#436b64", "#8B5A2B", "#F2B600", "#A9A6C4"]
           },
           "legend": {
             "orient": "bottom",
@@ -61,7 +57,10 @@
       },
       "layer": [
         {
-          "transform": [{"filter": "datum.properties.part != 'place'"}],
+          "transform": [
+            {"filter": "datum.properties.part != 'place'"},
+            {"calculate": "(datum.properties.value_usd_m) == 0 ? '$0 billion' : (datum.properties.value_usd_m) < 10 ? 'under $0.01 billion' : '$' + format((datum.properties.value_usd_m) / 1000, (datum.properties.value_usd_m) >= 1000 ? ',.1f' : ',.3f') + ' billion'", "as": "value_bn"}
+          ],
           "encoding": {
             "opacity": {
               "condition": [
@@ -81,12 +80,7 @@
               {"field": "properties.rank", "type": "quantitative", "title": "Flow rank"},
               {"field": "properties.exp_region", "type": "nominal", "title": "From"},
               {"field": "properties.imp_region", "type": "nominal", "title": "To"},
-              {
-                "field": "properties.value_usd_m",
-                "type": "quantitative",
-                "title": "Value (US$ million)",
-                "format": ",.0f"
-              },
+              {"field": "value_bn", "type": "nominal", "title": "Value"},
               {
                 "field": "properties.world_share",
                 "type": "quantitative",
@@ -140,35 +134,23 @@
         {
           "transform": [
             {"filter": "datum.properties.part == 'place'"},
-            {"calculate": "datum.properties.region", "as": "region"}
+            {"calculate": "datum.properties.region", "as": "region"},
+            {"calculate": "(datum.properties.exports_usd_m) == 0 ? '$0 billion' : (datum.properties.exports_usd_m) < 10 ? 'under $0.01 billion' : '$' + format((datum.properties.exports_usd_m) / 1000, (datum.properties.exports_usd_m) >= 1000 ? ',.1f' : ',.3f') + ' billion'", "as": "exports_bn"},
+            {"calculate": "(datum.properties.imports_usd_m) == 0 ? '$0 billion' : (datum.properties.imports_usd_m) < 10 ? 'under $0.01 billion' : '$' + format((datum.properties.imports_usd_m) / 1000, (datum.properties.imports_usd_m) >= 1000 ? ',.1f' : ',.3f') + ' billion'", "as": "imports_bn"},
+            {"calculate": "(datum.properties.within_usd_m) == 0 ? '$0 billion' : (datum.properties.within_usd_m) < 10 ? 'under $0.01 billion' : '$' + format((datum.properties.within_usd_m) / 1000, (datum.properties.within_usd_m) >= 1000 ? ',.1f' : ',.3f') + ' billion'", "as": "within_bn"}
           ],
           "encoding": {
             "tooltip": [
               {"field": "properties.region", "type": "nominal", "title": "Region"},
-              {
-                "field": "properties.exports_usd_m",
-                "type": "quantitative",
-                "title": "Exports (US$ million)",
-                "format": ",.0f"
-              },
+              {"field": "exports_bn", "type": "nominal", "title": "Exports"},
               {
                 "field": "properties.export_share",
                 "type": "quantitative",
                 "title": "Share of world exports",
                 "format": ".1%"
               },
-              {
-                "field": "properties.imports_usd_m",
-                "type": "quantitative",
-                "title": "Imports (US$ million)",
-                "format": ",.0f"
-              },
-              {
-                "field": "properties.within_usd_m",
-                "type": "quantitative",
-                "title": "Trade within the region (US$ million)",
-                "format": ",.0f"
-              },
+              {"field": "imports_bn", "type": "nominal", "title": "Imports"},
+              {"field": "within_bn", "type": "nominal", "title": "Trade within the region"},
               {
                 "field": "properties.top_exporters",
                 "type": "nominal",
